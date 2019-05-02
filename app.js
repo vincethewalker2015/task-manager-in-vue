@@ -10,5 +10,13 @@ var app = new Vue({
             { id: 4, name: 'Todo 4', description: 'This is Todo 1', completed: true }
             ],
         message: 'Hello World!'
+    },
+    computed: {
+        completedTasks: function() {
+            return this.tasks.filter( item => item.completed == true );
+        },
+        todoTasks: function() {
+            return this.tasks.filter( item => item.completed == false );
+        }
     }
 })
