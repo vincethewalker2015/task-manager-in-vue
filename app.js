@@ -16,6 +16,8 @@ var app = new Vue({
                           </div>
                         </div>
                         <div class="right floated three wide column">
+                          <i class="icon pencil violet" alt="Edit" v-on:click="$parent.editTask($event, task.id)"></i>
+                          <i class="icon trash red" alt="Delete" v-on:click="$parent.deleteTask($event, task.id)"></i>
                         </div>
                       </div>
                     </div>
@@ -30,7 +32,8 @@ var app = new Vue({
             { id: 3, name: 'Todo 3', description: 'This is Todo 3', completed: true },
             { id: 4, name: 'Todo 4', description: 'This is Todo 1', completed: true }
             ],
-        message: 'Hello World!'
+          task: {},
+          message: 'Hello World!'
     },
     computed: {
         completedTasks: function() {
@@ -42,8 +45,36 @@ var app = new Vue({
     },
     methods: {
       toggleDone: function(event, id) {
+        event.stopImmediatePropagation();
+        
         let task = this.tasks.find(item => item.id == id);
-        console.log(task);
+        
+        if(task) {
+          task.completed = !task.completed;
+          console.log('task toggled');
+        }
+      },
+      editTask: function(event, id){
+        event.stopImmediatePropagation();
+        
+        let task = this.tasks.find(item => item.id == id);
+        
+        if(task) {
+          this.task = { name: task.name, description: task.description, completed: task.completed } ;
+        }
+        
+      },
+      
+      deleteTask: function(event, id) {
+        event.stopImmediatePropagation();
+        
+        let taskIndex = this.tasks.findIndex(item => item.id == id);
+        
+        if(taskIndex > -1){
+          this.$delete(this.tasks, taskIndex);
+        }
+        
+        console.log('task deleted')
       }
-    }
+    },
 })
