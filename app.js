@@ -1,4 +1,4 @@
-/* global Vue */
+
 
 var app = new Vue({
     el: '#app',
@@ -33,7 +33,7 @@ var app = new Vue({
             { id: 4, name: 'Todo 4', description: 'This is Todo 1', completed: true }
             ],
           task: {},
-          message: 'Hello World!',
+          message: '',
           action: 'create'
     },
     computed: {
@@ -51,6 +51,7 @@ var app = new Vue({
       clear: function(){
         this.task = {};
         this.action = 'create';
+        this.message = '';
       },
       toggleDone: function(event, id) {
         event.stopImmediatePropagation();
@@ -60,10 +61,11 @@ var app = new Vue({
         if(task) {
           task.completed = !task.completed;
           console.log('task toggled');
+          this.messsage = `Task ${id} updated`;
         }
       },
       createTask: function(event){
-        event.preventDefault();
+       //event.preventDefault();
         
         if(!this.task.completed){
           this.task.completed = false;
@@ -77,6 +79,7 @@ var app = new Vue({
         this.tasks.push(newTask);
         
         this.clear();
+        this.message = `Task ${taskId} has been Created`;
       },
       
       editTask: function(event, id){
@@ -103,6 +106,8 @@ var app = new Vue({
           task.name = this.task.name;
           task.description = this.task.description;
           task.completed = this.task.completed;
+          this.message = `Task ${id} has been Updated`;
+          
         }
         
       },
@@ -114,9 +119,10 @@ var app = new Vue({
         
         if(taskIndex > -1){
           this.$delete(this.tasks, taskIndex);
+          this.message = `Task ${id} was Deleted`;
         }
         
-        console.log('task deleted')
+        console.log('task deleted');
       }
     },
 })

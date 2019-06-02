@@ -3,4 +3,4 @@
 
 ## Task Manager using Vue.js
 
-First app using vue.js
+A simple Todo list using Vue.js
